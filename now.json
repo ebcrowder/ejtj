@@ -1,6 +1,0 @@
-{
-  "name": "ejtj",
-  "version": 2,
-  "public": false,
-  "builds": [{ "src": "src/index.ts", "use": "@now/node" }]
-}
