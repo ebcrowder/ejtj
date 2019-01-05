@@ -1,4 +1,32 @@
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
 type User {
   id: ID! @unique
   name: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission]
+}
+
+type Trip {
+  id: ID! @unique
+  name: String!
+  city: String!
+  state: String
+  country: String!
+  dateStart: String!
+  dateEnd: String!
+  notes: String
+  image: String
+  pastEvent: Boolean!
+  dream: Boolean!
 }

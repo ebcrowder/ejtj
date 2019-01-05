@@ -1,14 +1,62 @@
 # import User from './generated/prisma.graphql'
 
-type User {
-  id: ID!
-  name: String!
-}
-
-type Query {
-  user(id: ID!): User
+type SuccessMessage {
+  message: String
 }
 
 type Mutation {
-  signup(name: String!): User!
+  createTrip(
+    name: String
+    city: String
+    state: String
+    country: String
+    dateStart: String
+    dateEnd: String
+    notes: String
+    image: String
+    pastEvent: Boolean
+    dream: Boolean
+  ): Trip!
+  updateTrip(
+    id: ID!
+    name: String
+    city: String
+    state: String
+    country: String
+    dateStart: String
+    dateEnd: String
+    notes: String
+    image: String
+    pastEvent: Boolean
+    dream: Boolean
+  ): Trip!
+  deleteTrip(id: ID!): Trip
+  signup(email: String!, password: String!, name: String!): User!
+  signin(email: String!, password: String!): User!
+  signout: SuccessMessage
+  requestReset(email: String!): SuccessMessage
+  resetPassword(
+    resetToken: String!
+    password: String!
+    confirmPassword: String!
+  ): User!
+  updatePermissions(permissions: [Permission], userId: ID!): User
+}
+
+type Query {
+  trips(
+    where: TripWhereInput
+    orderBy: TripOrderByInput
+    skip: Int
+    first: Int
+  ): [Trip]!
+  trip(where: TripWhereUniqueInput!): Trip
+  tripsConnection(where: TripWhereInput): TripConnection!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
 }
