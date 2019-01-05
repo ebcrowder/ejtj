@@ -1,0 +1,6 @@
+endpoint: https://us1.prisma.sh/eric-crowder-cf51d1/ejtj/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: typescript-client
+    output: ./generated/prisma-client/

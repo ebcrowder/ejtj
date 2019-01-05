@@ -1,0 +1,23 @@
+{
+  "name": "ejtj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -e ts,graphql -x ts-node --no-cache -r dotenv/config src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "graphql-yoga": "^1.16.9",
+    "prisma-binding": "^2.2.12"
+  },
+  "devDependencies": {
+    "dotenv": "^6.2.0",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
+}
