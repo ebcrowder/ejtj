@@ -1,6 +1,9 @@
 {
-  "name": "ejtj",
   "version": 2,
-  "public": false,
-  "builds": [{ "src": "src/index.ts", "use": "@now/node-server" }]
+  "builds": [{ "src": "src/*", "use": "@now/node@canary" }],
+  "build": {
+    "env": {
+      "PRISMA_ENDPOINT": "@prisma-endpoint"
+    }
+  }
 }
