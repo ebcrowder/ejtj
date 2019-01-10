@@ -6,7 +6,6 @@ const Index = () => (
   <>
     <Header />
     <Cards />
-    <h1>hello!</h1>
   </>
 );
 

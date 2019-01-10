@@ -1,6 +1,15 @@
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
 import withApollo from '../lib/withApollo';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  div#__next, html, body {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: 26px;
+    font-weight: 300;
+  }
+`;
 
 class MyApp extends App {
   render() {
@@ -9,6 +18,7 @@ class MyApp extends App {
     return (
       <Container>
         <ApolloProvider client={apollo}>
+          <GlobalStyle />
           <Component {...pageProps} />
         </ApolloProvider>
       </Container>

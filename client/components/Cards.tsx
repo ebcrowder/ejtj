@@ -1,6 +1,7 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import styled from 'styled-components';
 
 import Card from './Card';
 
@@ -22,8 +23,14 @@ const ALL_TRIPS_QUERY = gql`
   }
 `;
 
+const CardsList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+`;
+
 class Cards extends React.Component<{}, {}> {
-  render() {
+  public render() {
     return (
       <Query query={ALL_TRIPS_QUERY}>
         {({ data, error, loading }) => {
@@ -31,9 +38,11 @@ class Cards extends React.Component<{}, {}> {
           if (error) return <p>Error: {error.message}</p>;
           return (
             <>
-              {data.trips.map(item => (
-                <Card trip={item} key={item.id} />
-              ))}
+              <CardsList>
+                {data.trips.map(item => (
+                  <Card trip={item} key={item.id} />
+                ))}
+              </CardsList>
             </>
           );
         }}
