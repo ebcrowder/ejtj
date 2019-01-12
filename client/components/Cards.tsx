@@ -25,8 +25,9 @@ const ALL_TRIPS_QUERY = gql`
 
 const CardsList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 400px 400px 400px;
   justify-items: center;
+  justify-content: center;
 `;
 
 class Cards extends React.Component<{}, {}> {
