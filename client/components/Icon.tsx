@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface IconProps {
   label: string;
-  color: string;
+  iconColor: string;
 }
 
 const IconWrapper = styled.div`
@@ -12,16 +12,17 @@ const IconWrapper = styled.div`
   width: 120px;
   height: 120px;
   margin-top: 1rem;
-  background: ${props => props.color};
+  background: ${props => props.iconColor};
   border-radius: 50%;
   justify-content: center;
   align-items: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
 `;
 
 const Icon: React.FunctionComponent<IconProps> = props => {
   return (
-    <IconWrapper>
+    <IconWrapper {...props}>
       <p>{props.label}</p>
     </IconWrapper>
   );

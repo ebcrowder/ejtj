@@ -10,9 +10,9 @@ const IconsWrapper = styled.div`
 const Icons: React.FunctionComponent<{}> = () => {
   return (
     <IconsWrapper>
-      <Icon label="Dreams" color="green" />
-      <Icon label="Upcoming" color="red" />
-      <Icon label="Past Trips" color="purple" />
+      <Icon label="Dreams" iconColor="#00BFA5" />
+      <Icon label="Upcoming" iconColor="#F50057" />
+      <Icon label="Past Trips" iconColor="#6200EA" />
     </IconsWrapper>
   );
 };
