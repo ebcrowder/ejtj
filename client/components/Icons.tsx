@@ -4,7 +4,7 @@ import Icon from '../components/Icon';
 
 const IconsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 150px 150px 150px;
+  grid-template-columns: 120px 120px 120px;
 `;
 
 const Icons: React.FunctionComponent<{}> = () => {

@@ -9,10 +9,10 @@ interface IconProps {
 const IconWrapper = styled.div`
   display: flex;
   font-size: 20px;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin-top: 1rem;
-  background: ${props => props.iconColor};
+  background: ${(props: IconProps) => props.iconColor};
   border-radius: 50%;
   justify-content: center;
   align-items: center;

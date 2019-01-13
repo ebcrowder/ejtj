@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 const NavbarContainer = styled.nav`
@@ -16,20 +17,31 @@ const ListItems = styled.ul`
   display: flex;
 `;
 
-const Link = styled.a`
-  display: block;
-  margin: 5px;
+const LinkItem = styled.a`
+  margin: 10px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Logo = styled.img`
+  &:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const Header = () => (
   <NavbarContainer>
-    <img src="../static/logo.svg" />
+    <Link prefetch={true} href="/admin">
+      <Logo src="../static/logo.svg" />
+    </Link>
     <ListItems>
       <li>
-        <Link>Journal</Link>
+        <LinkItem>Journal</LinkItem>
       </li>
       <li>
-        <Link>About</Link>
+        <LinkItem>About</LinkItem>
       </li>
     </ListItems>
   </NavbarContainer>
