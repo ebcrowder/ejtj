@@ -52,6 +52,24 @@ export default class CreateTrip extends React.Component {
             if (!values.city) {
               errors.city = 'City is required';
             }
+            if (!values.state) {
+              errors.state = 'State is required';
+            }
+            if (!values.country) {
+              errors.country = 'Country is required';
+            }
+            if (!values.dateStart) {
+              errors.dateStart = 'Start date is required';
+            }
+            if (!values.dateEnd) {
+              errors.dateEnd = 'End date is required';
+            }
+            if (!values.pastEvent) {
+              errors.pastEvent = 'Past event is required';
+            }
+            if (!values.dream) {
+              errors.dream = 'Dream is required';
+            }
             return errors;
           }}
           onSubmit={values => {
@@ -74,7 +92,7 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="name"
                   name="name"
-                  border={errors.name && '1px solid #D50000'}
+                  border={touched.name && errors.name && '1px solid #D50000'}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.name}
@@ -88,7 +106,7 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="city"
                   name="city"
-                  border={errors.city && '1px solid #D50000'}
+                  border={touched.city && errors.city && '1px solid #D50000'}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.city}
@@ -102,7 +120,7 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="state"
                   name="state"
-                  border={errors.state && '1px solid #D50000'}
+                  border={touched.state && errors.state && '1px solid #D50000'}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.state}
@@ -116,7 +134,9 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="country"
                   name="country"
-                  border={errors.country && '1px solid #D50000'}
+                  border={
+                    touched.country && errors.country && '1px solid #D50000'
+                  }
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.country}
@@ -130,7 +150,9 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="dateStart"
                   name="dateStart"
-                  border={errors.dateStart && '1px solid #D50000'}
+                  border={
+                    touched.dateStart && errors.dateStart && '1px solid #D50000'
+                  }
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.dateStart}
@@ -144,7 +166,9 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="dateEnd"
                   name="dateEnd"
-                  border={errors.dateEnd && '1px solid #D50000'}
+                  border={
+                    touched.dateEnd && errors.dateEnd && '1px solid #D50000'
+                  }
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.dateEnd}
@@ -158,7 +182,9 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="pastEvent"
                   name="pastEvent"
-                  border={errors.pastEvent && '1px solid #D50000'}
+                  border={
+                    touched.pastEvent && errors.pastEvent && '1px solid #D50000'
+                  }
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.pastEvent}
@@ -172,7 +198,7 @@ export default class CreateTrip extends React.Component {
                 <Input
                   type="dream"
                   name="dream"
-                  border={errors.dream && '1px solid #D50000'}
+                  border={touched.dream && errors.dream && '1px solid #D50000'}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.dream}
