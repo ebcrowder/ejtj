@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Formik } from 'formik';
-import { graphql, compose } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 
@@ -74,176 +74,201 @@ const CREATE_TRIP_MUTATION = gql`
 export default class CreateTrip extends React.Component {
   public render() {
     return (
-      <Formik
-        initialValues={{
-          name: '',
-          city: '',
-          state: '',
-          country: '',
-          dateStart: '',
-          dateEnd: '',
-          pastEvent: '',
-          dream: ''
-        }}
-        validate={values => {
-          const errors = {};
-          if (!values.name) {
-            errors.name = 'Name is required';
-          }
-          if (!values.city) {
-            errors.city = 'City is required';
-          }
-          if (!values.state) {
-            errors.state = 'State is required';
-          }
-          if (!values.country) {
-            errors.country = 'Country is required';
-          }
-          if (!values.dateStart) {
-            errors.dateStart = 'Start date is required';
-          }
-          if (!values.dateEnd) {
-            errors.dateEnd = 'End date is required';
-          }
-          return errors;
-        }}
-        onSubmit={values => {
-          console.log(values);
-        }}
-        render={({
-          touched,
-          errors,
-          values,
-          handleChange,
-          handleBlur,
-          handleSubmit
-        }) => (
-          <Form onSubmit={handleSubmit}>
-            <Label>
-              Name
-              {touched.name && errors.name && (
-                <Text color="#D50000">{errors.name}</Text>
-              )}
-              <Input
-                type="name"
-                name="name"
-                border={touched.name && errors.name && '1px solid #D50000'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
-            </Label>
-            <Label>
-              City
-              {touched.city && errors.city && (
-                <Text color="#D50000">{errors.city}</Text>
-              )}
-              <Input
-                type="city"
-                name="city"
-                border={touched.city && errors.city && '1px solid #D50000'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.city}
-              />
-            </Label>
-            <Label>
-              State
-              {touched.state && errors.state && (
-                <Text color="#D50000">{errors.state}</Text>
-              )}
-              <Input
-                type="state"
-                name="state"
-                border={touched.state && errors.state && '1px solid #D50000'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.state}
-              />
-            </Label>
-            <Label>
-              Country
-              {touched.country && errors.country && (
-                <Text color="#D50000">{errors.country}</Text>
-              )}
-              <Input
-                type="country"
-                name="country"
-                border={
-                  touched.country && errors.country && '1px solid #D50000'
+      <Mutation mutation={CREATE_TRIP_MUTATION}>
+        {(createTrip, { loading, error }) => (
+          <Formik
+            initialValues={{
+              name: '',
+              city: '',
+              state: '',
+              country: '',
+              dateStart: '',
+              dateEnd: '',
+              pastEvent: false,
+              dream: false
+            }}
+            validate={values => {
+              const errors = {};
+              if (!values.name) {
+                errors.name = 'Name is required';
+              }
+              if (!values.city) {
+                errors.city = 'City is required';
+              }
+              if (!values.state) {
+                errors.state = 'State is required';
+              }
+              if (!values.country) {
+                errors.country = 'Country is required';
+              }
+              if (!values.dateStart) {
+                errors.dateStart = 'Start date is required';
+              }
+              if (!values.dateEnd) {
+                errors.dateEnd = 'End date is required';
+              }
+              return errors;
+            }}
+            onSubmit={values => {
+              createTrip({
+                variables: {
+                  name: values.name,
+                  city: values.city,
+                  state: values.state,
+                  country: values.country,
+                  dateStart: values.dateStart,
+                  dateEnd: values.dateEnd,
+                  pastEvent: values.pastEvent,
+                  dream: values.dream
                 }
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.country}
-              />
-            </Label>
-            <Label>
-              Start Date
-              {touched.dateStart && errors.dateStart && (
-                <Text color="#D50000">{errors.dateStart}</Text>
-              )}
-              <Input
-                type="dateStart"
-                name="dateStart"
-                border={
-                  touched.dateStart && errors.dateStart && '1px solid #D50000'
-                }
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.dateStart}
-              />
-            </Label>
-            <Label>
-              End Date
-              {touched.dateEnd && errors.dateEnd && (
-                <Text color="#D50000">{errors.dateEnd}</Text>
-              )}
-              <Input
-                type="dateEnd"
-                name="dateEnd"
-                border={
-                  touched.dateEnd && errors.dateEnd && '1px solid #D50000'
-                }
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.dateEnd}
-              />
-            </Label>
-            <Label>
-              Past Event
-              {touched.pastEvent && errors.pastEvent && (
-                <Text color="#D50000">{errors.pastEvent}</Text>
-              )}
-              <Checkbox
-                type="checkbox"
-                name="pastEvent"
-                border={
-                  touched.pastEvent && errors.pastEvent && '1px solid #D50000'
-                }
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.pastEvent}
-              />
-            </Label>
-            <Label>
-              Dream
-              {touched.dream && errors.dream && (
-                <Text color="#D50000">{errors.dream}</Text>
-              )}
-              <Checkbox
-                type="checkbox"
-                name="dream"
-                border={touched.dream && errors.dream && '1px solid #D50000'}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.dream}
-              />
-            </Label>
+              });
+            }}
+            render={({
+              touched,
+              errors,
+              values,
+              handleChange,
+              handleBlur,
+              handleSubmit
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <Label>
+                  Name
+                  {touched.name && errors.name && (
+                    <Text color="#D50000">{errors.name}</Text>
+                  )}
+                  <Input
+                    type="name"
+                    name="name"
+                    border={touched.name && errors.name && '1px solid #D50000'}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                  />
+                </Label>
+                <Label>
+                  City
+                  {touched.city && errors.city && (
+                    <Text color="#D50000">{errors.city}</Text>
+                  )}
+                  <Input
+                    type="city"
+                    name="city"
+                    border={touched.city && errors.city && '1px solid #D50000'}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.city}
+                  />
+                </Label>
+                <Label>
+                  State
+                  {touched.state && errors.state && (
+                    <Text color="#D50000">{errors.state}</Text>
+                  )}
+                  <Input
+                    type="state"
+                    name="state"
+                    border={
+                      touched.state && errors.state && '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.state}
+                  />
+                </Label>
+                <Label>
+                  Country
+                  {touched.country && errors.country && (
+                    <Text color="#D50000">{errors.country}</Text>
+                  )}
+                  <Input
+                    type="country"
+                    name="country"
+                    border={
+                      touched.country && errors.country && '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.country}
+                  />
+                </Label>
+                <Label>
+                  Start Date
+                  {touched.dateStart && errors.dateStart && (
+                    <Text color="#D50000">{errors.dateStart}</Text>
+                  )}
+                  <Input
+                    type="dateStart"
+                    name="dateStart"
+                    border={
+                      touched.dateStart &&
+                      errors.dateStart &&
+                      '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dateStart}
+                  />
+                </Label>
+                <Label>
+                  End Date
+                  {touched.dateEnd && errors.dateEnd && (
+                    <Text color="#D50000">{errors.dateEnd}</Text>
+                  )}
+                  <Input
+                    type="dateEnd"
+                    name="dateEnd"
+                    border={
+                      touched.dateEnd && errors.dateEnd && '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dateEnd}
+                  />
+                </Label>
+                <Label>
+                  Past Event
+                  {touched.pastEvent && errors.pastEvent && (
+                    <Text color="#D50000">{errors.pastEvent}</Text>
+                  )}
+                  <Checkbox
+                    type="checkbox"
+                    name="pastEvent"
+                    border={
+                      touched.pastEvent &&
+                      errors.pastEvent &&
+                      '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.pastEvent}
+                  />
+                </Label>
+                <Label>
+                  Dream
+                  {touched.dream && errors.dream && (
+                    <Text color="#D50000">{errors.dream}</Text>
+                  )}
+                  <Checkbox
+                    type="checkbox"
+                    name="dream"
+                    border={
+                      touched.dream && errors.dream && '1px solid #D50000'
+                    }
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.dream}
+                  />
+                </Label>
 
-            <Button type="submit">Submit</Button>
-          </Form>
+                <Button disabled={loading} type="submit">
+                  Submit
+                </Button>
+              </Form>
+            )}
+          />
         )}
-      />
+      </Mutation>
     );
   }
 }

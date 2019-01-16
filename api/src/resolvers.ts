@@ -28,25 +28,9 @@ export const resolvers = {
         }
       });
     },
-    async deleteTrip(parent, args, context) {
+    async deleteTrip(_, args, context, info) {
       const where = { id: args.id };
-      // 1. find the item
-      const trip = await context.prisma.trip(
-        { where },
-        `{ id title user { id }}`
-      );
-      // 2. Check if they own that item, or have the permissions
-      // const ownsItem = item.user.id === ctx.request.userId;
-      // const hasPermissions = ctx.request.user.permissions.some(permission =>
-      //   ['ADMIN', 'ITEMDELETE'].includes(permission)
-      // );
-
-      // if (!ownsItem && !hasPermissions) {
-      //   throw new Error("You don't have permission to do that!");
-      // }
-
-      // 3. Delete it!
-      return context.prisma.deleteTrip({ where });
+      return context.prisma.mutation.deleteTrip({ where });
     }
   }
 };
