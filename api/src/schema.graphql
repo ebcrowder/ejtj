@@ -52,6 +52,7 @@ type Query {
   ): [Trip]!
   trip(where: TripWhereUniqueInput!): Trip
   tripsConnection(where: TripWhereInput): TripConnection!
+  users: [User]!
 }
 
 type User {
