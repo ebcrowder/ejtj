@@ -12,16 +12,17 @@ const NavbarContainer = styled.nav`
   color: #311b92;
 `;
 
-const ListItems = styled.ul`
-  list-style-type: none;
+const LinkList = styled.ul`
+  margin: 0;
+  padding: 0;
   display: flex;
-`;
-
-const LinkItem = styled.a`
-  margin: 10px;
-
-  &:hover {
-    text-decoration: underline;
+  a {
+    padding: 1rem;
+    align-items: center;
+    font-size: 1em;
+    text-decoration: none;
+    border: 0;
+    color: #311b92;
   }
 `;
 
@@ -33,17 +34,20 @@ const Logo = styled.img`
 
 const Header = () => (
   <NavbarContainer>
-    <Link prefetch={true} href="/admin">
+    <Link prefetch={true} href="/">
       <Logo src="../static/logo.svg" />
     </Link>
-    <ListItems>
-      <li>
-        <LinkItem>Journal</LinkItem>
-      </li>
-      <li>
-        <LinkItem>About</LinkItem>
-      </li>
-    </ListItems>
+    <LinkList>
+      <Link prefetch={true} href="/admin">
+        <a>Admin</a>
+      </Link>
+      <Link href="/journal">
+        <a>Journal</a>
+      </Link>
+      <Link href="/about">
+        <a>About</a>
+      </Link>
+    </LinkList>
   </NavbarContainer>
 );
 

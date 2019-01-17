@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const Form = styled.form`
   display: grid;
   grid-template-columns: 10rem;
+  margin: 1rem;
 `;
 
 const Input = styled.input`

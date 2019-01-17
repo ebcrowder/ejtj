@@ -5,6 +5,7 @@ import Icon from '../components/Icon';
 const IconsWrapper = styled.div`
   display: grid;
   grid-template-columns: 120px 120px 120px;
+  margin: 1rem;
 `;
 
 const Icons: React.FunctionComponent<{}> = () => {

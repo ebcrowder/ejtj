@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto Slab', sans-serif;
     font-size: 26px;
     font-weight: 300;
+    margin: 0;
   }
 `;
 
