@@ -2,7 +2,6 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Header from '../components/Header';
-import styled from 'styled-components';
 import { ALL_TRIPS_QUERY } from '../components/Cards';
 
 const TRIP_QUERY = gql`
@@ -24,7 +23,7 @@ const TRIP_QUERY = gql`
 `;
 
 class TripDetail extends React.Component<{}, {}> {
-  state = {
+  public state = {
     activeProject: 0,
     id: ''
   };
@@ -37,8 +36,7 @@ class TripDetail extends React.Component<{}, {}> {
 
   public handleNextTrip = trips => {
     const arr = trips.length;
-    console.log('tripslength', arr);
-    const index: any = this.state.activeProject + 1;
+    const index = this.state.activeProject + 1;
     const indexPosition = index % arr;
 
     this.setState(
@@ -52,22 +50,20 @@ class TripDetail extends React.Component<{}, {}> {
 
   public handlePrevTrip = trips => {
     const arr = trips.length;
-    const idx = this.state.activeProject;
+    const index = this.state.activeProject - 1;
+    const indexPosition = index % arr;
 
-    console.log('initial: ' + idx);
-
-    if (idx === 0) {
-      const idx = arr - 1;
+    if (this.state.activeProject === 0) {
+      return;
     } else {
-      const idx = idx - 1;
+      this.setState(
+        {
+          activeProject: indexPosition,
+          id: trips[indexPosition].id
+        },
+        () => console.log('state changed to', this.state)
+      );
     }
-
-    console.log('updated: ' + idx);
-
-    this.setState({
-      activeProject: idx,
-      name: data[idx].name
-    });
   };
 
   public render() {
