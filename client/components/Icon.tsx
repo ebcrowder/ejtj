@@ -16,7 +16,7 @@ const IconWrapper = styled.div`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
   color: #ffffff;
 `;
 

@@ -1,8 +1,10 @@
 import * as React from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 interface TripProps {
   trip: {
+    id: string;
     name: string;
     city: string;
     state: string;
@@ -18,7 +20,7 @@ const CardContainer = styled.div`
   width: 350px;
   margin: 2rem;
   background: #eeeeee;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   color: #311b92;
 `;
@@ -35,9 +37,19 @@ const CardImage = styled.img`
 `;
 
 const Card: React.FunctionComponent<TripProps> = props => {
+  console.log(props);
   return (
     <CardContainer>
+      <Link
+        href={{
+          pathname: 'update',
+          query: { id: props.trip.id }
+        }}
+      >
+        <p>test</p>
+      </Link>
       <CardImage src="../static/mthood.jpg" />
+
       <TextContainer>
         <p>{props.trip.name}</p>
         <p>

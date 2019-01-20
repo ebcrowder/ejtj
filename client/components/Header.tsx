@@ -23,6 +23,9 @@ const LinkList = styled.ul`
     text-decoration: none;
     border: 0;
     color: #311b92;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -40,9 +43,6 @@ const Header = () => (
     <LinkList>
       <Link prefetch={true} href="/admin">
         <a>Admin</a>
-      </Link>
-      <Link href="/journal">
-        <a>Journal</a>
       </Link>
       <Link href="/about">
         <a>About</a>
