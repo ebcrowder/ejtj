@@ -1,9 +1,9 @@
 import * as React from 'react';
+import Router, { withRouter } from 'next/router';
 import TripDetail from '../components/TripDetail';
 
-const Update: React.FunctionComponent<{}> = query => {
-  //   console.log('props', id);
-  return <TripDetail id={query.id} />;
-};
-
-export default Update;
+export default withRouter(({ router: { query } }) => (
+  <div>
+    <TripDetail id={query.id} />
+  </div>
+));

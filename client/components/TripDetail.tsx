@@ -1,6 +1,7 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import Header from '../components/Header';
 import styled from 'styled-components';
 
 const TRIP_QUERY = gql`
@@ -21,34 +22,31 @@ const TRIP_QUERY = gql`
   }
 `;
 
-class TripDetail extends React.Component<{}, {}> {
+class TripDetail extends React.Component<{ id: any }, {}> {
   public render() {
-    console.log('TripDetail props', this.props);
     return (
-      //   <Query
-      //     query={TRIP_QUERY}
-      //     variables={{
-      //       id: this.props.id
-      //     }}
-      //   >
-      //     {({ data, loading }) => {
-      //       if (loading) return <p>Loading...</p>;
-      //       if (!data.item) return <p>No Item Found for ID {this.props.id}</p>;
-      //       return (
-      //         <div>
-      //           {/* <p>{data.item.name}</p>
-      //           <p>{data.item.city}</p>
-      //           <p>{data.item.state}</p>
-      //           <p>{data.item.country}</p> */}
-      //           hi
-      //         </div>
-      //       );
-      //     }}
-      //   </Query>
-      // );
-      <div>
-        <p>hello</p>
-      </div>
+      <>
+        <Header />
+        <Query
+          query={TRIP_QUERY}
+          variables={{
+            id: this.props.id
+          }}
+        >
+          {({ data, loading }) => {
+            if (loading) return <p>Loading...</p>;
+            if (!data.trip) return <p>No Item Found for ID {this.props.id}</p>;
+            return (
+              <div>
+                <p>{data.trip.name}</p>
+                <p>{data.trip.city}</p>
+                <p>{data.trip.state}</p>
+                <p>{data.trip.country}</p>
+              </div>
+            );
+          }}
+        </Query>
+      </>
     );
   }
 }

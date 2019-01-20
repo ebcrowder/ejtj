@@ -37,18 +37,16 @@ const CardImage = styled.img`
 `;
 
 const Card: React.FunctionComponent<TripProps> = props => {
-  console.log(props);
   return (
     <CardContainer>
       <Link
         href={{
-          pathname: 'update',
+          pathname: '/update',
           query: { id: props.trip.id }
         }}
       >
-        <p>test</p>
+        <CardImage src="../static/mthood.jpg" />
       </Link>
-      <CardImage src="../static/mthood.jpg" />
 
       <TextContainer>
         <p>{props.trip.name}</p>
