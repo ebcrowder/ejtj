@@ -33,11 +33,11 @@ class Cards extends React.Component<{}, {}> {
   public render() {
     return (
       <Query query={ALL_TRIPS_QUERY}>
-        {({ data, error, loading }) => {
+        {({ data, loading }) => {
           if (loading) return <p>Loading...</p>;
-          if (error) return <p>Error: {error.message}</p>;
           return (
             <>
+              {console.log('allTrips', data)}
               <CardsList>
                 {data.trips.map(item => (
                   <Card trip={item} key={item.id} />
