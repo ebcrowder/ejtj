@@ -3,6 +3,11 @@ import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
+// import getConfig from 'next/config';
+// const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+
+// console.log(serverRuntimeConfig.mySecret); // Will only be available on the server side
+// console.log(publicRuntimeConfig.CLOUDINARY_URL);
 
 const Form = styled.form`
   display: grid;
@@ -73,6 +78,29 @@ const CREATE_TRIP_MUTATION = gql`
 `;
 
 export default class CreateTrip extends React.Component {
+  public state = {
+    image: '',
+    largeImage: ''
+  };
+
+  public uploadFile = async e => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'ejtjblog');
+
+    // TODO update URL with config
+
+    const res = await fetch(`testurl`, {
+      method: 'POST',
+      body: data
+    });
+    const file = await res.json();
+    this.setState({
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url
+    });
+  };
   public render() {
     return (
       <Mutation mutation={CREATE_TRIP_MUTATION}>
@@ -261,6 +289,24 @@ export default class CreateTrip extends React.Component {
                     value={values.dream}
                   />
                 </Label>
+                <label htmlFor="file">
+                  Image
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    placeholder="Upload an image"
+                    required
+                    onChange={this.uploadFile}
+                  />
+                  {this.state.image && (
+                    <img
+                      width="200"
+                      src={this.state.image}
+                      alt="Upload Preview"
+                    />
+                  )}
+                </label>
 
                 <Button disabled={loading} type="submit">
                   Submit

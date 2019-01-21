@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Header from '../components/Header';
 import { ALL_TRIPS_QUERY } from '../components/Cards';
+import UpdateTrip from '../components/UpdateTrip';
 
 const TRIP_QUERY = gql`
   query TRIP_QUERY($id: ID!) {
@@ -70,23 +71,25 @@ class TripDetail extends React.Component<{}, {}> {
     return (
       <>
         <Header />
-        <Query query={ALL_TRIPS_QUERY}>
-          {({ data: { trips }, loading: loadingAllTrips }) => (
+        <Query query={ALL_TRIPS_QUERY} ssr={false}>
+          {({
+            data: { trips },
+            error: tripsError,
+            loading: loadingAllTrips
+          }) => (
             <Query
               query={TRIP_QUERY}
               variables={{
                 id: this.props.id
               }}
+              ssr={false}
             >
-              {({ data: { trip }, loading: loadingTrip }) => {
+              {({ data: { trip }, error: tripError, loading: loadingTrip }) => {
                 if (loadingTrip || loadingAllTrips) return <p>loading...</p>;
-
+                if (tripsError || tripError) return 'Error!';
                 return (
                   <div>
-                    <p>{trip.id}</p>
-                    <p>{trip.name}</p>
-                    <p>{trip.city}</p>
-                    <p>{trip.state}</p>
+                    <UpdateTrip id={this.state.id} />
                     <button onClick={() => this.handlePrevTrip(trips)}>
                       previous
                     </button>

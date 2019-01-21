@@ -28,18 +28,22 @@ const UpdateTrip = props => {
       variables={{
         id: props.id
       }}
+      ssr={false}
     >
-      {({ data, loading }) => {
+      {({ data: { trip }, error, loading }) => {
         if (loading) return <p>loading...</p>;
+        if (error) return `Error!: ${error}`;
         return (
           <div>
-            <p>{data.trip.name}</p>
-            <p>{data.trip.city}</p>
-            <p>{data.trip.country}</p>
-            <p>{data.trip.state}</p>
+            <p>{trip.name}</p>
+            <p>{trip.city}</p>
+            <p>{trip.country}</p>
+            <p>{trip.state}</p>
           </div>
         );
       }}
     </Query>
   );
 };
+
+export default UpdateTrip;

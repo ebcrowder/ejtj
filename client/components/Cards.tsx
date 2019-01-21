@@ -37,7 +37,6 @@ class Cards extends React.Component<{}, {}> {
           if (loading) return <p>Loading...</p>;
           return (
             <>
-              {console.log('allTrips', data)}
               <CardsList>
                 {data.trips.map(item => (
                   <Card trip={item} key={item.id} />
