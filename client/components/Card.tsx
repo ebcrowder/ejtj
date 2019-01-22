@@ -13,6 +13,7 @@ interface TripProps {
     dateEnd: string;
     dream: string;
     pastEvent: string;
+    image: string;
   };
 }
 
@@ -45,7 +46,7 @@ const Card: React.FunctionComponent<TripProps> = props => {
           query: { id: props.trip.id }
         }}
       >
-        <CardImage src="../static/mthood.jpg" />
+        <CardImage src={props.trip.image} />
       </Link>
 
       <TextContainer>

@@ -60,6 +60,7 @@ const CREATE_TRIP_MUTATION = gql`
     $dateEnd: String!
     $pastEvent: Boolean!
     $dream: Boolean!
+    $image: String!
   ) {
     createTrip(
       name: $name
@@ -70,6 +71,7 @@ const CREATE_TRIP_MUTATION = gql`
       dateEnd: $dateEnd
       pastEvent: $pastEvent
       dream: $dream
+      image: $image
     ) {
       id
     }
@@ -113,7 +115,8 @@ export default class CreateTrip extends React.Component {
               dateStart: '',
               dateEnd: '',
               pastEvent: false,
-              dream: false
+              dream: false,
+              image: ''
             }}
             validate={values => {
               const errors = {};
@@ -147,7 +150,8 @@ export default class CreateTrip extends React.Component {
                   dateStart: values.dateStart,
                   dateEnd: values.dateEnd,
                   pastEvent: values.pastEvent,
-                  dream: values.dream
+                  dream: values.dream,
+                  image: this.state.image
                 }
               });
             }}
