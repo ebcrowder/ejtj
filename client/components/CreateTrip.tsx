@@ -3,11 +3,10 @@ import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-// import getConfig from 'next/config';
-// const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+import getConfig from 'next/config';
 
-// console.log(serverRuntimeConfig.mySecret); // Will only be available on the server side
-// console.log(publicRuntimeConfig.CLOUDINARY_URL);
+const { publicRuntimeConfig } = getConfig();
+const { CLOUDINARY_URL } = publicRuntimeConfig;
 
 const Form = styled.form`
   display: grid;
@@ -91,7 +90,7 @@ export default class CreateTrip extends React.Component {
 
     // TODO update URL with config
 
-    const res = await fetch(`testurl`, {
+    const res = await fetch(CLOUDINARY_URL, {
       method: 'POST',
       body: data
     });
