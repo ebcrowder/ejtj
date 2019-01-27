@@ -1,9 +1,5 @@
 # import User from './generated/prisma.graphql'
 
-type SuccessMessage {
-  message: String
-}
-
 type Mutation {
   createTrip(
     name: String
@@ -33,13 +29,6 @@ type Mutation {
   deleteTrip(id: ID!): Trip
   signup(email: String!, password: String!, name: String!): User!
   signin(email: String!, password: String!): User!
-  signout: SuccessMessage
-  requestReset(email: String!): SuccessMessage
-  resetPassword(
-    resetToken: String!
-    password: String!
-    confirmPassword: String!
-  ): User!
   updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
@@ -53,6 +42,8 @@ type Query {
   trip(where: TripWhereUniqueInput!): Trip
   tripsConnection(where: TripWhereInput): TripConnection!
   users: [User]!
+  me: User
+  user(where: UserWhereUniqueInput!): User
 }
 
 type User {

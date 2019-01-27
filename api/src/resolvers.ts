@@ -7,7 +7,20 @@ export const resolvers = {
     trips: forwardTo('prisma'),
     trip: forwardTo('prisma'),
     tripsConnection: forwardTo('prisma'),
-    users: forwardTo('prisma')
+    users: forwardTo('prisma'),
+    user: forwardTo('prisma'),
+    me(_, args, context, info) {
+      // check if there is a current user ID
+      if (!context.request.userId) {
+        return null;
+      }
+      return context.prisma.query.user(
+        {
+          where: { id: context.request.userId }
+        },
+        info
+      );
+    }
   },
   Mutation: {
     createTrip(_, args, context, info) {
@@ -41,22 +54,23 @@ export const resolvers = {
       // hash their password
       const password = await bcrypt.hash(args.password, 10);
       // create the user in the database
-      const user = await context.prisma.mutation.createUser(
-        {
-          data: {
-            ...args,
-            password,
-            permissions: { set: ['ADMIN'] }
-          }
-        },
-        info
-      );
+      const user = await context.prisma.mutation.createUser({
+        data: {
+          ...args,
+          password,
+          permissions: { set: ['ADMIN'] }
+        }
+      });
 
-      // create the JWT token for them and return the user to the browser
-      return {
-        token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
-        user
-      };
+      // create the JWT token for them
+      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
+
+      context.response.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365
+      });
+      // 8. return the new user
+      return user;
     },
     async signin(_, { email, password }, context, info) {
       // 1. check if there is a user with that email
@@ -69,12 +83,16 @@ export const resolvers = {
       if (!valid) {
         throw new Error('Invalid Password!');
       }
+      // 3. generate the JWT Token
+      const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
 
-      // create the JWT token for them and return the user to the browser
-      return {
-        token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),
-        user
-      };
+      context.response.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365
+      });
+
+      // 8. return the new user
+      return user;
     }
   }
 };
