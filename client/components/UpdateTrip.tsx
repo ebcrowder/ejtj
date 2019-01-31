@@ -1,25 +1,6 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import Header from '../components/Header';
-
-const TRIP_QUERY = gql`
-  query TRIP_QUERY($id: ID!) {
-    trip(where: { id: $id }) {
-      id
-      name
-      city
-      state
-      country
-      dateEnd
-      dateStart
-      dream
-      pastEvent
-      image
-      notes
-    }
-  }
-`;
+import { TRIP_QUERY } from '../lib/queries';
 
 const UpdateTrip = props => {
   return (

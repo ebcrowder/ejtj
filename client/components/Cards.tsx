@@ -1,27 +1,9 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
+import { ALL_TRIPS_QUERY } from '../lib/queries';
 import Card from './Card';
-
-const ALL_TRIPS_QUERY = gql`
-  query ALL_TRIPS_QUERY {
-    trips {
-      id
-      name
-      city
-      state
-      country
-      dateEnd
-      dateStart
-      dream
-      pastEvent
-      image
-      notes
-    }
-  }
-`;
 
 const CardsList = styled.div`
   display: grid;

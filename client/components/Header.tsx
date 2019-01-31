@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import User from './User';
+import { Query } from 'react-apollo';
+
+import { GET_AUTH_STATUS, GET_USER } from '../lib/queries';
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -37,32 +39,28 @@ const Logo = styled.img`
 `;
 
 const Header = () => (
-  <User>
-    {({ data: { me } }) => (
+  <Query query={GET_AUTH_STATUS}>
+    {({ data, loading }) => (
       <NavbarContainer>
         <Link prefetch={true} href="/">
           <Logo src="../static/logo.svg" />
         </Link>
-        {me && (
-          <>
-            <LinkList>
-              <Link prefetch={true} href="/admin">
-                <a>Admin</a>
-              </Link>
-              <Link href="/about">
-                <a>About</a>
-              </Link>
-            </LinkList>
-          </>
-        )}
-        {!me && (
-          <Link href="/login">
-            <a>Sign In</a>
+        {console.log(data)}
+        <LinkList>
+          <Link prefetch={true} href="/admin">
+            <a>Admin</a>
           </Link>
-        )}
+          <Link href="/about">
+            <a>About</a>
+          </Link>
+        </LinkList>
+
+        <Link href="/login">
+          <a>Sign In</a>
+        </Link>
       </NavbarContainer>
     )}
-  </User>
+  </Query>
 );
 
 export default Header;

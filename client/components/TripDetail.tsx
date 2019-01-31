@@ -1,27 +1,8 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import Header from '../components/Header';
-import { ALL_TRIPS_QUERY } from '../components/Cards';
+import { ALL_TRIPS_QUERY, TRIP_QUERY } from '../lib/queries';
 import UpdateTrip from '../components/UpdateTrip';
-
-const TRIP_QUERY = gql`
-  query TRIP_QUERY($id: ID!) {
-    trip(where: { id: $id }) {
-      id
-      name
-      city
-      state
-      country
-      dateEnd
-      dateStart
-      dream
-      pastEvent
-      image
-      notes
-    }
-  }
-`;
 
 class TripDetail extends React.Component<{}, {}> {
   public state = {

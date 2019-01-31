@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import styled from 'styled-components';
-import { CURRENT_USER_QUERY } from './User';
+
+import { SIGNIN_MUTATION } from '../lib/mutations';
 
 const Form = styled.form`
   display: grid;
@@ -43,23 +43,10 @@ const Button = styled.button`
   }
 `;
 
-const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      id
-      email
-      name
-    }
-  }
-`;
-
 export default class SignIn extends React.Component {
   public render() {
     return (
-      <Mutation
-        mutation={SIGNIN_MUTATION}
-        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-      >
+      <Mutation mutation={SIGNIN_MUTATION}>
         {(signin, { loading, error }) => (
           <Formik
             initialValues={{

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import styled from 'styled-components';
 import getConfig from 'next/config';
+
+import { CREATE_TRIP_MUTATION } from '../lib/mutations';
 
 const { publicRuntimeConfig } = getConfig();
 const { CLOUDINARY_URL } = publicRuntimeConfig;
@@ -47,34 +48,6 @@ const Button = styled.button`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   &:hover {
     background: #1de9b6;
-  }
-`;
-
-const CREATE_TRIP_MUTATION = gql`
-  mutation CREATE_TRIP_MUTATION(
-    $name: String!
-    $city: String!
-    $state: String!
-    $country: String!
-    $dateStart: String!
-    $dateEnd: String!
-    $pastEvent: Boolean!
-    $dream: Boolean!
-    $image: String!
-  ) {
-    createTrip(
-      name: $name
-      city: $city
-      state: $state
-      country: $country
-      dateStart: $dateStart
-      dateEnd: $dateEnd
-      pastEvent: $pastEvent
-      dream: $dream
-      image: $image
-    ) {
-      id
-    }
   }
 `;
 
