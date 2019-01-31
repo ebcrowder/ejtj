@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import User from './User';
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -36,19 +37,32 @@ const Logo = styled.img`
 `;
 
 const Header = () => (
-  <NavbarContainer>
-    <Link prefetch={true} href="/">
-      <Logo src="../static/logo.svg" />
-    </Link>
-    <LinkList>
-      <Link prefetch={true} href="/admin">
-        <a>Admin</a>
-      </Link>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </LinkList>
-  </NavbarContainer>
+  <User>
+    {({ data: { me } }) => (
+      <NavbarContainer>
+        <Link prefetch={true} href="/">
+          <Logo src="../static/logo.svg" />
+        </Link>
+        {me && (
+          <>
+            <LinkList>
+              <Link prefetch={true} href="/admin">
+                <a>Admin</a>
+              </Link>
+              <Link href="/about">
+                <a>About</a>
+              </Link>
+            </LinkList>
+          </>
+        )}
+        {!me && (
+          <Link href="/login">
+            <a>Sign In</a>
+          </Link>
+        )}
+      </NavbarContainer>
+    )}
+  </User>
 );
 
 export default Header;

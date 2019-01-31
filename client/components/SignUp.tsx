@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-import { CURRENT_USER_QUERY } from './User';
 
 const Form = styled.form`
   display: grid;
@@ -43,9 +42,13 @@ const Button = styled.button`
   }
 `;
 
-const SIGNIN_MUTATION = gql`
-  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
+const SIGNUP_MUTATION = gql`
+  mutation SIGNUP_MUTATION(
+    $name: String!
+    $email: String!
+    $password: String!
+  ) {
+    signup(name: $name, email: $email, password: $password) {
       id
       email
       name
@@ -53,21 +56,22 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
-export default class SignIn extends React.Component {
+export default class SignUp extends React.Component {
   public render() {
     return (
-      <Mutation
-        mutation={SIGNIN_MUTATION}
-        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-      >
+      <Mutation mutation={SIGNUP_MUTATION}>
         {(signin, { loading, error }) => (
           <Formik
             initialValues={{
+              name: '',
               email: '',
               password: ''
             }}
             validate={values => {
               const errors = {};
+              if (!values.name) {
+                errors.name = 'Name is required';
+              }
               if (!values.email) {
                 errors.email = 'Email is required';
               }
@@ -79,6 +83,7 @@ export default class SignIn extends React.Component {
             onSubmit={values => {
               signin({
                 variables: {
+                  name: values.name,
                   email: values.email,
                   password: values.password
                 }
@@ -93,6 +98,20 @@ export default class SignIn extends React.Component {
               handleSubmit
             }) => (
               <Form onSubmit={handleSubmit}>
+                <Label>
+                  Name
+                  {touched.name && errors.name && (
+                    <Text color="#D50000">{errors.name}</Text>
+                  )}
+                  <Input
+                    type="name"
+                    name="name"
+                    border={touched.name && errors.name && '1px solid #D50000'}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                  />
+                </Label>
                 <Label>
                   Email
                   {touched.email && errors.email && (
