@@ -3,8 +3,7 @@ import * as session from 'express-session';
 import { Prisma } from 'prisma-binding';
 import { resolvers } from './resolvers';
 
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
@@ -37,6 +36,8 @@ server.express.use(
     }
   })
 );
+
+server.express.use(cors());
 
 server.start(
   {

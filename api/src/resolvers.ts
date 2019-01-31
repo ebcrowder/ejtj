@@ -1,6 +1,5 @@
 import { forwardTo } from 'prisma-binding';
 import * as bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
 
 export const resolvers = {
   Query: {
@@ -8,7 +7,21 @@ export const resolvers = {
     trip: forwardTo('prisma'),
     tripsConnection: forwardTo('prisma'),
     users: forwardTo('prisma'),
-    user: forwardTo('prisma')
+    isLoggedIn: (parent, args, { request }) => ({
+      status: typeof request.session.userId !== 'undefined'
+    }),
+    async user(parent, args, context, info) {
+      const id = context.request.session.userId;
+
+      if (typeof id === 'undefined') throw new Error('auth_error');
+
+      return context.prisma.query.user(
+        {
+          where: { id }
+        },
+        info
+      );
+    }
   },
   Mutation: {
     createTrip(_, args, context, info) {
