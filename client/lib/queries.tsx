@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export const ALL_TRIPS_QUERY = gql`
   query ALL_TRIPS_QUERY {

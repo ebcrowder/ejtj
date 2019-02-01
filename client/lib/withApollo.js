@@ -5,6 +5,14 @@ export default withApollo(
   ({ ctx, headers, initialState }) =>
     new ApolloClient({
       uri: 'http://localhost:4000',
-      cache: new InMemoryCache().restore(initialState || {})
+      cache: new InMemoryCache().restore(initialState || {}),
+      request: operation => {
+        operation.setContext({
+          fetchOptions: {
+            credentials: 'include'
+          },
+          headers
+        });
+      }
     })
 );
