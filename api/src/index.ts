@@ -37,7 +37,13 @@ server.express.use(
   })
 );
 
-server.express.use(cors());
+server.express.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
 
 server.start(
   {
