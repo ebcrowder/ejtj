@@ -1,8 +1,10 @@
 import * as React from 'react';
+import Router from 'next/router';
 import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
+import { GET_AUTH_STATUS } from '../lib/queries';
 import { SIGNIN_MUTATION } from '../lib/mutations';
 
 const Form = styled.form`
@@ -44,9 +46,16 @@ const Button = styled.button`
 `;
 
 export default class SignIn extends React.Component {
+  public handleSubmit = () => {
+    Router.push('/');
+  };
+
   public render() {
     return (
-      <Mutation mutation={SIGNIN_MUTATION}>
+      <Mutation
+        mutation={SIGNIN_MUTATION}
+        refetchQueries={[{ query: GET_AUTH_STATUS }]}
+      >
         {(signin, { loading, error }) => (
           <Formik
             initialValues={{
@@ -69,7 +78,7 @@ export default class SignIn extends React.Component {
                   email: values.email,
                   password: values.password
                 }
-              });
+              }).then(this.handleSubmit);
             }}
             render={({
               touched,

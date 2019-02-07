@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 
-import { GET_AUTH_STATUS, GET_USER } from '../lib/queries';
+import { GET_AUTH_STATUS } from '../lib/queries';
+import { LOGOUT_MUTATION } from '../lib/mutations';
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -40,24 +41,36 @@ const Logo = styled.img`
 
 const Header = () => (
   <Query query={GET_AUTH_STATUS}>
-    {({ data, loading }) => (
+    {({ data, loading, refetch }) => (
       <NavbarContainer>
         <Link prefetch={true} href="/">
           <Logo src="../static/logo.svg" />
         </Link>
-        {console.log(data)}
         <LinkList>
-          <Link prefetch={true} href="/admin">
-            <a>Admin</a>
-          </Link>
           <Link href="/about">
             <a>About</a>
           </Link>
-        </LinkList>
 
-        <Link href="/login">
-          <a>Sign In</a>
-        </Link>
+          {data.isLoggedIn.status === false ? (
+            <Link href="/login">
+              <a>Sign In</a>
+            </Link>
+          ) : (
+            <Mutation mutation={LOGOUT_MUTATION} update={() => refetch()}>
+              {logout => (
+                <>
+                  <Link prefetch={true} href="/admin">
+                    <a>Admin</a>
+                  </Link>
+
+                  <Link href="/">
+                    <a onClick={logout}>Logout</a>
+                  </Link>
+                </>
+              )}
+            </Mutation>
+          )}
+        </LinkList>
       </NavbarContainer>
     )}
   </Query>
