@@ -33,6 +33,7 @@ const TextContainer = styled.div`
 const CardImage = styled.img`
   position: relative;
   width: 100%;
+  max-height: 250px;
   object-fit: cover;
   border-radius: 5px;
 `;

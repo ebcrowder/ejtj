@@ -12,7 +12,10 @@ const { CLOUDINARY_URL } = publicRuntimeConfig;
 const Form = styled.form`
   display: grid;
   grid-template-columns: 10rem;
-  margin: 1rem;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  padding: 5rem;
 `;
 
 const Input = styled.input`

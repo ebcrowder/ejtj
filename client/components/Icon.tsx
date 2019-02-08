@@ -4,9 +4,10 @@ import styled from 'styled-components';
 interface IconProps {
   label: string;
   iconColor: string;
+  onClick: any;
 }
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.button`
   display: flex;
   font-size: 20px;
   width: 100px;

@@ -9,11 +9,27 @@ const IconsWrapper = styled.div`
 `;
 
 const Icons: React.FunctionComponent<{}> = () => {
+  const [isDream, setDream] = React.useState(true);
+  const [isUpcoming, setUpcoming] = React.useState(true);
+  const [isPast, setPast] = React.useState(true);
+
   return (
     <IconsWrapper>
-      <Icon label="Dreams" iconColor="#00BFA5" />
-      <Icon label="Upcoming" iconColor="#F50057" />
-      <Icon label="Past Trips" iconColor="#6200EA" />
+      <Icon
+        label="Dreams"
+        iconColor="#00BFA5"
+        onClick={() => setDream(!isDream)}
+      />
+      <Icon
+        label="Upcoming"
+        iconColor="#F50057"
+        onClick={() => setUpcoming(!isUpcoming)}
+      />
+      <Icon
+        label="Past Trips"
+        iconColor="#6200EA"
+        onClick={() => setPast(!isPast)}
+      />
     </IconsWrapper>
   );
 };
