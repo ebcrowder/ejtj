@@ -27,31 +27,23 @@ class Cards extends React.Component<CardsProps, {}> {
     this.setState({ tripData });
   }
 
-  public filterProps = trips =>
-    trips.filter(item => item.dream || item.pastEvent || item.upcomingEvent);
+  public filterProps = (trips, props) => trips.filter(item => item[props]);
 
   public componentDidUpdate(prevProps) {
-    const tripData = [];
-
-    if (this.props.isDream !== prevProps.isDream) {
-      // this.props.ALL_TRIPS_QUERY.refetch()
-      //   .then(query => query.data.trips)
-      //   .then(data => tripData.push(this.filterProps(data)));
-
-      this.props.ALL_TRIPS_QUERY.refetch()
-        .then(query => console.log(query.data.trips))
-        .then(data => console.log(this.filterProps(data)));
+    const { tripData } = this.state;
+    const { isDream, isPast } = this.props;
+    if (isDream !== prevProps.isDream) {
+      const filteredData = this.filterProps(tripData, 'dream');
+      this.setState({ tripData: filteredData });
+    } else if (isPast !== prevProps.isPast) {
+      const filteredData = this.filterProps(tripData, 'pastEvent');
+      this.setState({ tripData: filteredData });
     }
     // else if (this.props.isUpcoming !== prevProps.isUpcoming) {
     //   this.props.ALL_TRIPS_QUERY.refetch().then(query =>
     //     tripArray.push(this.filterProps(query.data.trips))
     //   );
-    // } else if (this.props.isPast !== prevProps.isPast) {
-    //   this.props.ALL_TRIPS_QUERY.refetch().then(query =>
-    //     tripArray.push(this.filterProps(query.data.trips))
-    //   );
     // }
-    // return this.setState({ tripData });
   }
 
   public render() {
