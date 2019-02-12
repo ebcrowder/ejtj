@@ -27,16 +27,19 @@ class Cards extends React.Component<CardsProps, {}> {
     this.setState({ tripData });
   }
 
-  public filterProps = (trips, props) => trips.filter(item => item[props]);
+  public filterProps = trips => {
+    const dreams = trips.filter(item => item.dream === true);
+    const pastEvents = trips.filter(item => item.pastEvent === true);
+
+    return [...dreams, ...pastEvents];
+  };
 
   public componentDidUpdate(prevProps) {
     const { tripData } = this.state;
     const { isDream, isPast } = this.props;
-    if (isDream !== prevProps.isDream) {
-      const filteredData = this.filterProps(tripData, 'dream');
-      this.setState({ tripData: filteredData });
-    } else if (isPast !== prevProps.isPast) {
-      const filteredData = this.filterProps(tripData, 'pastEvent');
+    console.log(prevProps);
+    if (isDream !== prevProps.isDream || isPast !== prevProps.isPast) {
+      const filteredData = this.filterProps(tripData);
       this.setState({ tripData: filteredData });
     }
     // else if (this.props.isUpcoming !== prevProps.isUpcoming) {
