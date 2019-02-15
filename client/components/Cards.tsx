@@ -19,7 +19,11 @@ interface CardsProps {
 
 class Cards extends React.Component<CardsProps, {}> {
   public state = {
-    tripData: []
+    tripData: [],
+    filters: {
+      dream: true,
+      past: true
+    }
   };
 
   public componentDidMount() {
@@ -27,19 +31,37 @@ class Cards extends React.Component<CardsProps, {}> {
     this.setState({ tripData });
   }
 
-  public filterProps = trips => {
-    const dreams = trips.filter(item => item.dream === true);
-    const pastEvents = trips.filter(item => item.pastEvent === true);
+  // public filterProps = (trips, isDream, isPast) => {
+  //   const dreams = trips.filter(item =>
+  //     item.dream === isDream ? true : false
+  //   );
+  //   const pastEvents = trips.filter(item =>
+  //     item.pastEvent === isPast ? true : false
+  //   );
 
-    return [...dreams, ...pastEvents];
-  };
+  //   console.log('dreams', dreams);
+  //   console.log('pastEvents', pastEvents);
+
+  //   const filterArray = dreams.concat(pastEvents);
+  //   // console.log(filterArray);
+
+  //   return dreams;
+  // };
+
+  public setFilter(category) {
+    this.setState(state => ({
+      filters: Object.assign({}, state.filters, {
+        [category]: !state.filters[category]
+      })
+    }));
+  }
 
   public componentDidUpdate(prevProps) {
     const { tripData } = this.state;
     const { isDream, isPast } = this.props;
     console.log(prevProps);
-    if (isDream !== prevProps.isDream || isPast !== prevProps.isPast) {
-      const filteredData = this.filterProps(tripData);
+    if (isDream !== prevProps.isDream) {
+      const filteredData = this.setFilter(isDream);
       this.setState({ tripData: filteredData });
     }
     // else if (this.props.isUpcoming !== prevProps.isUpcoming) {
@@ -50,7 +72,7 @@ class Cards extends React.Component<CardsProps, {}> {
   }
 
   public render() {
-    const { tripData } = this.state;
+    const { tripData, filters } = this.state;
 
     return (
       <Query query={ALL_TRIPS_QUERY}>
@@ -59,9 +81,14 @@ class Cards extends React.Component<CardsProps, {}> {
           return (
             <>
               <CardsList>
-                {tripData.map(item => (
-                  <Card trip={item} key={item.id} />
-                ))}
+                {tripData
+                  .filter(
+                    item =>
+                      item.dream === filters.dream || item.past === filters.past
+                  )
+                  .map(item => (
+                    <Card trip={item} key={item.id} />
+                  ))}
               </CardsList>
             </>
           );
