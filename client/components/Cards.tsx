@@ -31,25 +31,9 @@ class Cards extends React.Component<CardsProps, {}> {
     this.setState({ tripData });
   }
 
-  // public filterProps = (trips, isDream, isPast) => {
-  //   const dreams = trips.filter(item =>
-  //     item.dream === isDream ? true : false
-  //   );
-  //   const pastEvents = trips.filter(item =>
-  //     item.pastEvent === isPast ? true : false
-  //   );
-
-  //   console.log('dreams', dreams);
-  //   console.log('pastEvents', pastEvents);
-
-  //   const filterArray = dreams.concat(pastEvents);
-  //   // console.log(filterArray);
-
-  //   return dreams;
-  // };
-
   public setFilter(category) {
     this.setState(state => ({
+      /* tslint:disable:prefer-object-spread */
       filters: Object.assign({}, state.filters, {
         [category]: !state.filters[category]
       })
@@ -57,18 +41,15 @@ class Cards extends React.Component<CardsProps, {}> {
   }
 
   public componentDidUpdate(prevProps) {
-    const { tripData } = this.state;
     const { isDream, isPast } = this.props;
+
     console.log(prevProps);
+
     if (isDream !== prevProps.isDream) {
-      const filteredData = this.setFilter(isDream);
-      this.setState({ tripData: filteredData });
+      this.setFilter('dream');
+    } else if (isPast !== prevProps.isPast) {
+      this.setFilter('past');
     }
-    // else if (this.props.isUpcoming !== prevProps.isUpcoming) {
-    //   this.props.ALL_TRIPS_QUERY.refetch().then(query =>
-    //     tripArray.push(this.filterProps(query.data.trips))
-    //   );
-    // }
   }
 
   public render() {
@@ -84,7 +65,8 @@ class Cards extends React.Component<CardsProps, {}> {
                 {tripData
                   .filter(
                     item =>
-                      item.dream === filters.dream || item.past === filters.past
+                      item.dream === filters.dream ||
+                      item.pastEvent === filters.past
                   )
                   .map(item => (
                     <Card trip={item} key={item.id} />
