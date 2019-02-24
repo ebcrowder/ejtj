@@ -1,11 +1,14 @@
 import * as React from 'react';
 import Header from '../components/Header';
 import CreateTrip from '../components/CreateTrip';
+import Auth from '../components/Auth';
 
 const Admin: React.FunctionComponent<{}> = () => (
   <>
-    <Header />
-    <CreateTrip />
+    <Auth>
+      <Header />
+      <CreateTrip />
+    </Auth>
   </>
 );
 

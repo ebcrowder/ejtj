@@ -43,8 +43,6 @@ class Cards extends React.Component<CardsProps, {}> {
   public componentDidUpdate(prevProps) {
     const { isDream, isPast } = this.props;
 
-    console.log(prevProps);
-
     if (isDream !== prevProps.isDream) {
       this.setFilter('dream');
     } else if (isPast !== prevProps.isPast) {

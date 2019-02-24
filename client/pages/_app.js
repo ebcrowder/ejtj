@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo';
-import withApollo from '../lib/withApollo';
 import { createGlobalStyle } from 'styled-components';
+import withApollo from '../lib/withApollo';
 
 const GlobalStyle = createGlobalStyle`
   div#__next, html, body {
